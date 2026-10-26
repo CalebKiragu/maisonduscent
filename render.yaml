@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: maisonduscent-preview
+    runtime: node
+    plan: free
+    region: frankfurt
+    branch: main
+    # Manual deploys work from this public repo. Auto-deploy requires
+    # Render's GitHub app to be connected to the repository.
+    autoDeploy: false
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: PREVIEW_MODE
+        value: "true"
+      - key: SITE_URL
+        value: https://maisonduscent-preview.onrender.com
+      - key: DATA_DIR
+        value: /tmp/maison-data
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"

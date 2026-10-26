@@ -1,0 +1,30 @@
+{
+  "name": "maison-du-scent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Maison du Scent — authentic perfume decants, Mombasa",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "seed": "tsx src/lib/seed-runner.ts",
+    "db:reset": "node -e \"const fs=require('fs');const p='data/maison.db';if(fs.existsSync(p)){fs.unlinkSync(p);console.log('Database removed')}\" && npm run seed"
+  },
+  "dependencies": {
+    "lucide-react": "^0.468.0",
+    "next": "16.4.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "4.3.3",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}
