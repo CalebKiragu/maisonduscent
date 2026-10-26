@@ -155,8 +155,15 @@ export function phoneHref(value: string): string {
   return digits ? `tel:+${digits}` : "tel:";
 }
 
-export function whatsappLink(message: string, phone: string): string {
-  return `https://wa.me/${normalizePhoneNumber(phone)}?text=${encodeURIComponent(message)}`;
+export function whatsappTarget(value: string): string {
+  const digits = normalizePhoneNumber(value);
+  if (digits) return digits;
+  const handle = value.trim().replace(/^@/, "");
+  return handle || "maison_du_scent";
+}
+
+export function whatsappLink(message: string, target: string): string {
+  return `https://wa.me/${encodeURIComponent(whatsappTarget(target))}?text=${encodeURIComponent(message)}`;
 }
 
 export function initials(name: string): string {

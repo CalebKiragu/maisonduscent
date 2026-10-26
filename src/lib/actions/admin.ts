@@ -316,7 +316,9 @@ export async function saveSettingsAction(_prev: AdminFormState, formData: FormDa
   const storeName = text(formData.get("store_name"));
   const email = text(formData.get("email"));
   const phone = text(formData.get("phone"));
-  const whatsappNumber = normalizePhoneNumber(text(formData.get("whatsapp_number")) || phone);
+  const whatsappInput = text(formData.get("whatsapp_number")) || phone;
+  const whatsappDigits = normalizePhoneNumber(whatsappInput);
+  const whatsappHandle = whatsappInput.replace(/^@/, "").trim();
   const phoneDigits = normalizePhoneNumber(phone);
 
   if (!storeName) return { error: "Store name is required." };
@@ -326,8 +328,15 @@ export async function saveSettingsAction(_prev: AdminFormState, formData: FormDa
   if (phoneDigits.length < 9 || phoneDigits.length > 15) {
     return { error: "Enter a valid phone number with country code, for example +254 712 345 678." };
   }
-  if (whatsappNumber.length < 9 || whatsappNumber.length > 15) {
-    return { error: "Enter a valid WhatsApp number with country code, for example +254 712 345 678." };
+
+  const whatsappNumber =
+    /^[+\d\s()-]+$/.test(whatsappInput) && whatsappDigits.length >= 9 && whatsappDigits.length <= 15
+      ? whatsappDigits
+      : /^[a-zA-Z0-9_.-]{3,64}$/.test(whatsappHandle)
+        ? whatsappHandle
+        : "";
+  if (!whatsappNumber) {
+    return { error: "Enter a WhatsApp number with country code or a wa.me username, for example maison_du_scent." };
   }
 
   const entries: [string, string][] = [

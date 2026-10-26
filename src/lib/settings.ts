@@ -2,6 +2,7 @@ import { getDb } from "./db";
 
 export interface StoreSettings {
   storeName: string;
+  /** Phone number with country code, or a wa.me handle such as maison_du_scent. */
   whatsappNumber: string;
   email: string;
   phone: string;
@@ -18,7 +19,7 @@ export interface StoreSettings {
 
 const defaults: StoreSettings = {
   storeName: "Maison du Scent",
-  whatsappNumber: "254700000001",
+  whatsappNumber: "maison_du_scent",
   email: "hello@maisonduscent.com",
   phone: "+254 700 000 001",
   city: "Mombasa",
@@ -32,6 +33,12 @@ const defaults: StoreSettings = {
   membershipPrice: 1500,
 };
 
+const demoWhatsappValues = new Set(["+254 700 000 001", "254700000001"]);
+
+function resolveWhatsapp(value: string | undefined, fallback: string): string {
+  return value && !demoWhatsappValues.has(value) ? value : fallback;
+}
+
 export function getSettings(): StoreSettings {
   const db = getDb();
   const rows = db.prepare("SELECT key, value FROM settings").all() as { key: string; value: string }[];
@@ -42,7 +49,7 @@ export function getSettings(): StoreSettings {
   };
   return {
     storeName: map.get("store_name") ?? defaults.storeName,
-    whatsappNumber: map.get("whatsapp_number") ?? map.get("phone") ?? defaults.whatsappNumber,
+    whatsappNumber: resolveWhatsapp(map.get("whatsapp_number") ?? map.get("phone"), defaults.whatsappNumber),
     email: map.get("email") ?? defaults.email,
     phone: map.get("phone") ?? defaults.phone,
     city: map.get("city") ?? defaults.city,

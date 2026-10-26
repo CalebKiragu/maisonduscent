@@ -12,10 +12,12 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const settings = await getSettings();
-  const whatsappDisplay =
-    normalizePhoneNumber(settings.whatsappNumber) === normalizePhoneNumber(settings.phone)
+  const whatsappDigits = normalizePhoneNumber(settings.whatsappNumber);
+  const whatsappDisplay = whatsappDigits
+    ? whatsappDigits === normalizePhoneNumber(settings.phone)
       ? settings.phone
-      : `+${normalizePhoneNumber(settings.whatsappNumber)}`;
+      : `+${whatsappDigits}`
+    : `@${settings.whatsappNumber.replace(/^@/, "")}`;
 
   return (
     <>

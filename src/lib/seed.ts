@@ -545,7 +545,7 @@ export function seedDatabase(db: DatabaseSync) {
 
     const settings: [string, string][] = [
       ["store_name", "Maison du Scent"],
-      ["whatsapp_number", "+254 700 000 001"],
+      ["whatsapp_number", "maison_du_scent"],
       ["email", "hello@maisonduscent.com"],
       ["phone", "+254 700 000 001"],
       ["city", "Mombasa"],

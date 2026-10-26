@@ -41,9 +41,9 @@ export function SettingsForm({ settings }: { settings: StoreSettings }) {
             <p className="mt-1 text-[0.6rem] text-stone">Shown in the footer and contact page. Used for click-to-call.</p>
           </div>
           <div>
-            <label className="admin-label" htmlFor="whatsapp_number">WhatsApp number</label>
-            <input id="whatsapp_number" name="whatsapp_number" type="tel" required defaultValue={settings.whatsappNumber} className="admin-field" placeholder="+254 712 345 678" />
-            <p className="mt-1 text-[0.6rem] text-stone">Must include the country code. Every wa.me link uses this number.</p>
+            <label className="admin-label" htmlFor="whatsapp_number">WhatsApp number or username</label>
+            <input id="whatsapp_number" name="whatsapp_number" type="text" required defaultValue={settings.whatsappNumber} className="admin-field" placeholder="maison_du_scent" />
+            <p className="mt-1 text-[0.6rem] text-stone">Use a number with country code, or the wa.me handle. Every WhatsApp link uses this destination.</p>
           </div>
           <div>
             <label className="admin-label" htmlFor="email">Public email</label>
