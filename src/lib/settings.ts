@@ -21,7 +21,7 @@ const defaults: StoreSettings = {
   storeName: "Maison du Scent",
   whatsappNumber: "maison_du_scent",
   email: "hello@maisonduscent.com",
-  phone: "+254 700 000 001",
+  phone: "+254 113 172832",
   city: "Mombasa",
   freeDeliveryThreshold: 5000,
   deliveryFee: 350,
@@ -33,10 +33,10 @@ const defaults: StoreSettings = {
   membershipPrice: 1500,
 };
 
-const demoWhatsappValues = new Set(["+254 700 000 001", "254700000001"]);
+const demoContactValues = new Set(["+254 700 000 001", "254700000001"]);
 
-function resolveWhatsapp(value: string | undefined, fallback: string): string {
-  return value && !demoWhatsappValues.has(value) ? value : fallback;
+function resolveStaleContact(value: string | undefined, fallback: string): string {
+  return value && !demoContactValues.has(value) ? value : fallback;
 }
 
 export function getSettings(): StoreSettings {
@@ -49,9 +49,9 @@ export function getSettings(): StoreSettings {
   };
   return {
     storeName: map.get("store_name") ?? defaults.storeName,
-    whatsappNumber: resolveWhatsapp(map.get("whatsapp_number") ?? map.get("phone"), defaults.whatsappNumber),
+    whatsappNumber: resolveStaleContact(map.get("whatsapp_number"), defaults.whatsappNumber),
     email: map.get("email") ?? defaults.email,
-    phone: map.get("phone") ?? defaults.phone,
+    phone: resolveStaleContact(map.get("phone"), defaults.phone),
     city: map.get("city") ?? defaults.city,
     freeDeliveryThreshold: num("free_delivery_threshold", defaults.freeDeliveryThreshold),
     deliveryFee: num("delivery_fee", defaults.deliveryFee),
